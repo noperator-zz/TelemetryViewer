@@ -606,4 +606,31 @@ public class OpenGLTimeDomainChart extends PositionedChart {
 		
 	}
 
+	@Override public void verticalPan(float percentage) {
+		disableAutoscale();
+		float range = manualYmax - manualYmin;
+		float delta = range * percentage;
+
+		manualYmin += delta;
+		manualYmax += delta;
+	}
+
+	@Override public void verticalZoom(float percentage) {
+		disableAutoscale();
+		float range = manualYmax - manualYmin;
+		float delta = range * percentage;
+
+//		manualYmin -= delta;
+		manualYmax += delta;
+	}
+
+	public void disableAutoscale() {
+		// TODO The 'autoscale' checkboxes do not update to reflect the new state
+		autoscaleYmin = false;
+		autoscaleYmax = false;
+
+		manualYmin = plotMinY;
+		manualYmax = plotMaxY;
+	}
+
 }

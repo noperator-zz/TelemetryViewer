@@ -838,7 +838,7 @@ public class OpenGLChartsView extends JPanel {
 				if(scrollAmount == 0)
 					return;
 				
-				if(mwe.isControlDown() == false && mwe.isShiftDown() == false && !ChartsController.getCharts().isEmpty()) {
+				if(mwe.isControlDown() == false && mwe.isShiftDown() == false && mwe.isAltDown() == false && !ChartsController.getCharts().isEmpty()) {
 					
 					// no modifiers held down, so we're timeshifting
 					
@@ -967,7 +967,13 @@ public class OpenGLChartsView extends JPanel {
 							setLiveView();
 						
 					}
-				
+
+				} else if (mwe.isControlDown() == false && mwe.isShiftDown() == true && !ChartsController.getCharts().isEmpty() && chartUnderMouse != null) {
+					chartUnderMouse.verticalPan((float) (-scrollAmount * zoomPerScroll));
+
+				} else if (mwe.isControlDown() == true && mwe.isShiftDown() == true && !ChartsController.getCharts().isEmpty() && chartUnderMouse != null) {
+					chartUnderMouse.verticalZoom((float) (scrollAmount * zoomPerScroll));
+
 				} else if(mwe.isControlDown() == true && !ChartsController.getCharts().isEmpty()) {
 					
 					// ctrl is down, so we're zooming
@@ -978,7 +984,7 @@ public class OpenGLChartsView extends JPanel {
 					else if(zoomLevel < 0)
 						zoomLevel = Double.MIN_VALUE;
 					
-				} else if(mwe.isShiftDown() == true) {
+				} else if(mwe.isAltDown() == true) {
 					
 					// shift is down, so we're adjusting the display scaling factor
 					float newFactor = ChartsController.getDisplayScalingFactorUser() * (1 - ((float)scrollAmount * displayScalingPerScroll));

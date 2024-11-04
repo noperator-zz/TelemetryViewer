@@ -200,5 +200,8 @@ public abstract class PositionedChart {
 		}
 		
 	}
-	
+
+	public void verticalPan(float percentage) {}
+	public void verticalZoom(float percentage) {}
+
 }
