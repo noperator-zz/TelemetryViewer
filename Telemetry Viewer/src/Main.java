@@ -13,6 +13,7 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -71,7 +72,31 @@ public class Main {
 	 */
 	@SuppressWarnings("serial")
 	public static void main(String[] args) {
-		
+		List<String> settingsFiles = new ArrayList<>();
+
+		int i = 0;
+		while (i < args.length) {
+			if (args[i].equals("--title")) {
+				if (i+1 >= args.length) {
+					System.out.println("Missing argument for --title");
+					return;
+				}
+				window.setTitle(args[i+1]);
+				i++;
+			} else if (args[i].equals("--settings")) {
+				if (i+1 >= args.length) {
+					System.out.println("Missing argument for --settings");
+					return;
+				}
+				settingsFiles.add(args[i+1]);
+				i++;
+			} else {
+				System.out.println("Unknown argument: " + args[i]);
+			}
+
+			i++;
+		}
+
 		try { UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); } catch(Exception e){}
 		
 		// create the cache folder
@@ -146,6 +171,11 @@ public class Main {
 			}
 		});
 		
+		if (!settingsFiles.isEmpty()) {
+			ConnectionsController.importFiles(settingsFiles.toArray(new String[0]));
+			System.out.println("Settings file loaded");
+		}
+
 		// show the window
 		window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // so the windowClosing listener can cancel the close
 		window.setVisible(true);
