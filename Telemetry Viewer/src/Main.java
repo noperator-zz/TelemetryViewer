@@ -176,6 +176,8 @@ public class Main {
 			System.out.println("Settings file loaded");
 		}
 
+		System.out.println("Telemetry Viewer is ready");
+
 		// show the window
 		window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // so the windowClosing listener can cancel the close
 		window.setVisible(true);
