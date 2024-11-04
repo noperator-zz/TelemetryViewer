@@ -16,6 +16,9 @@ public abstract class Plot {
 	String xAxisTitle = "";
 	BitfieldEvents events;
 	boolean cachedMode;
+	int highlighted_dataset = -1;
+
+	final float kHighlightWidth = 5.0f;
 	
 	/**
 	 * Step 1: (Required) Calculate the domain and range of the plot.

@@ -446,6 +446,7 @@ public class OpenGLTimeDomainChart extends PositionedChart {
 		}
 		
 		// draw the legend, if space is available
+		plot.highlighted_dataset = -1;
 		if(showLegend && haveDatasets && xLegendBorderRight < width - Theme.tilePadding) {
 			OpenGL.drawQuad2D(gl, Theme.legendBackgroundColor, xLegendBorderLeft, yLegendBorderBottom, xLegendBorderRight, yLegendBorderTop);
 			
@@ -454,6 +455,7 @@ public class OpenGLTimeDomainChart extends PositionedChart {
 					OpenGL.drawQuadOutline2D(gl, Theme.tickLinesColor, legendMouseoverCoordinates[i][0], legendMouseoverCoordinates[i][1], legendMouseoverCoordinates[i][2], legendMouseoverCoordinates[i][3]);
 					Dataset d = allDatasets.get(i);
 					handler = EventHandler.onPress(event -> ConfigureView.instance.forDataset(d));
+					plot.highlighted_dataset = i;
 				}
 				OpenGL.drawQuad2D(gl, allDatasets.get(i).glColor, legendBoxCoordinates[i][0], legendBoxCoordinates[i][1], legendBoxCoordinates[i][2], legendBoxCoordinates[i][3]);
 				OpenGL.drawMediumText(gl, allDatasets.get(i).name, (int) xLegendNameLeft[i], (int) yLegendTextBaseline, 0);
@@ -603,7 +605,7 @@ public class OpenGLTimeDomainChart extends PositionedChart {
 		
 		super.disposeGpu(gl);
 		plot.freeResources(gl);
-		
+
 	}
 
 	@Override public void verticalPan(float percentage) {

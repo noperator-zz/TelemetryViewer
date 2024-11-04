@@ -528,9 +528,13 @@ public class PlotMilliseconds extends Plot {
 				Dataset dataset = datasets.getNormal(i);
 				if(dataset.isBitfield)
 					continue;
-				
+
+				if (i == highlighted_dataset) {
+					Theme.lineWidth = kHighlightWidth;
+				}
 				OpenGL.drawLinesX_Y(gl, GL3.GL_LINE_STRIP, dataset.glColor, bufferX, buffersY[i], (int) plotSampleCount);
-				
+				Theme.lineWidth = 1;
+
 				// also draw points if there are relatively few samples on screen
 				float occupiedPlotWidthPercentage = (float) (datasetsController.getTimestamp((int) maxSampleNumber) - datasetsController.getTimestamp((int) minSampleNumber)) / (float) plotDomain;
 				float occupiedPlotWidth = plotWidth * occupiedPlotWidthPercentage;
@@ -645,7 +649,10 @@ public class PlotMilliseconds extends Plot {
 				float occupiedPlotWidthPercentage = (float) (datasetsController.getTimestamp((int) maxSampleNumber) - datasetsController.getTimestamp((int) minSampleNumber)) / (float) plotDomain;
 				float occupiedPlotWidth = plotWidth * occupiedPlotWidthPercentage;
 				boolean fewSamplesOnScreen = (occupiedPlotWidth / plotSampleCount) > (2 * Theme.pointWidth);
-				
+
+				if (i == highlighted_dataset) {
+					Theme.lineWidth = kHighlightWidth;
+				}
 				if(draw1.enabled) {
 					gl.glEnable(GL3.GL_SCISSOR_TEST);
 					gl.glScissor(draw1.scissorArgs[0], draw1.scissorArgs[1], draw1.scissorArgs[2], draw1.scissorArgs[3]);
@@ -654,7 +661,7 @@ public class PlotMilliseconds extends Plot {
 						OpenGL.drawPointsX_Y(gl, dataset.glColor, draw1.bufferX, draw1.buffersY[i], draw1.sampleCount);
 					gl.glDisable(GL3.GL_SCISSOR_TEST);
 				}
-				
+
 				if(draw2.enabled) {
 					gl.glEnable(GL3.GL_SCISSOR_TEST);
 					gl.glScissor(draw2.scissorArgs[0], draw2.scissorArgs[1], draw2.scissorArgs[2], draw2.scissorArgs[3]);
@@ -663,10 +670,10 @@ public class PlotMilliseconds extends Plot {
 						OpenGL.drawPointsX_Y(gl, dataset.glColor, draw2.bufferX, draw2.buffersY[i], draw2.sampleCount);
 					gl.glDisable(GL3.GL_SCISSOR_TEST);
 				}
-				
+				Theme.lineWidth = 1;
 			}
 		}
-		
+
 //		// draw color bars at the bottom edge of the plot to indicate draw call regions
 //		OpenGL.makeOrthoMatrix(offscreenMatrix, 0, plotWidth, 0, plotHeight, -1, 1);
 //		OpenGL.useMatrix(gl, offscreenMatrix);

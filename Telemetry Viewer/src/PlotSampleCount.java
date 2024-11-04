@@ -312,8 +312,12 @@ public class PlotSampleCount extends Plot {
 				if(dataset.isBitfield)
 					continue;
 
+				if (i == highlighted_dataset) {
+					Theme.lineWidth = kHighlightWidth;
+				}
 				OpenGL.drawLinesY(gl, GL3.GL_LINE_STRIP, dataset.glColor, buffersY[i], (int) plotSampleCount, (int) (plotMinX >= 0 ? 0 : plotMinX * -1));
-				
+				Theme.lineWidth = 1;
+
 				// also draw points if there are relatively few samples on screen
 				boolean fewSamplesOnScreen = (plotWidth / (float) plotDomain) > (2 * Theme.pointWidth);
 				if(fewSamplesOnScreen)
@@ -422,7 +426,10 @@ public class PlotSampleCount extends Plot {
 					continue;
 				
 				boolean fewSamplesOnScreen = (plotWidth / (float) plotDomain) > (2 * Theme.pointWidth);
-				
+
+				if (i == highlighted_dataset) {
+					Theme.lineWidth = kHighlightWidth;
+				}
 				if(draw1.enabled) {
 					gl.glEnable(GL3.GL_SCISSOR_TEST);
 					gl.glScissor(draw1.scissorArgs[0], draw1.scissorArgs[1], draw1.scissorArgs[2], draw1.scissorArgs[3]);
@@ -440,7 +447,7 @@ public class PlotSampleCount extends Plot {
 						OpenGL.drawPointsY(gl, dataset.glColor, draw2.buffersY[i], draw2.sampleCount, draw2.xOffset);
 					gl.glDisable(GL3.GL_SCISSOR_TEST);
 				}
-				
+				Theme.lineWidth = 1;
 			}
 		}
 		
