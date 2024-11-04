@@ -576,7 +576,7 @@ public class OpenGLTimeDomainChart extends PositionedChart {
 				}
 				for(int datasetN = 0; datasetN < datasetsCount; datasetN++) {
 					Dataset dataset = allDatasets.get(datasetN);
-					text[datasetN + tooltipLines.length] = datasets.getSampleAsString(dataset, tooltip.sampleNumber);
+					text[datasetN + tooltipLines.length] = dataset.name + ": " + datasets.getSampleAsString(dataset, tooltip.sampleNumber);
 					colors[datasetN + tooltipLines.length] = dataset.color;
 				}
 				float anchorX = tooltip.pixelX + xPlotLeft;
