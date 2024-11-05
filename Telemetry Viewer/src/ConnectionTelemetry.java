@@ -840,7 +840,7 @@ public class ConnectionTelemetry extends Connection {
 				} catch(SocketTimeoutException ste) {
 					
 					// a client never sent a packet, so do nothing and let the loop try again.
-					NotificationsController.showDebugMessage("UDP socket timed out while waiting for a packet.");
+//					NotificationsController.showDebugMessage("UDP socket timed out while waiting for a packet.");
 					
 				} catch(IOException ioe) {
 					
