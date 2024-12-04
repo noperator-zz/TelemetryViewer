@@ -114,7 +114,8 @@ public class Main {
 		window.setSize(window.getPreferredSize());
 		window.setMinimumSize(window.getMinimumSize());
 		window.setLocationRelativeTo(null);
-		window.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		// Fullscreen uses a lot of GPU. Start in windowed mode instead.
+		window.setExtendedState(JFrame.NORMAL);
 		
 		// support smooth scrolling
 		window.addWindowFocusListener(new WindowFocusListener() {
